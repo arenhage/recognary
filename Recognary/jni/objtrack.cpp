@@ -122,6 +122,16 @@ JNIEXPORT void JNICALL Java_se_swg_recognary_ObjTrackView_findFeatures(JNIEnv* e
 		return imgScribble == NULL;
 	}
 
+	JNIEXPORT void JNICALL Java_se_swg_recognary_MainActivity_resetHSVSettings(JNIEnv* env) {
+		//reset
+		lowerH=170;
+		lowerS=160;
+		lowerV=60;
+		upperH=180;
+		upperS=255;
+		upperV=255;
+	}
+
 	//H=1, S=2, V=3
 	//lower=1, upper=2
 	JNIEXPORT jint JNICALL Java_se_swg_recognary_MainActivity_changeHSVbound(JNIEnv* env, jobject thiz, jint lu, jint id, jint val) {

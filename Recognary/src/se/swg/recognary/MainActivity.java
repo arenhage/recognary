@@ -17,7 +17,9 @@ import org.opencv.imgproc.Imgproc;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,11 +67,20 @@ public class MainActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(new ObjTrackView(this));
 
+		//create a new dialog that will contain the settings
 		settingsDialog = new Dialog(this);
 		LayoutInflater inflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
 		View layout = inflater.inflate(R.layout.activity_settings, (ViewGroup)findViewById(R.id.dialog_settings));
 		settingsDialog.setContentView(layout);
 		settingsDialog.setTitle("HSV Settings");
+		settingsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+		//move the dialog to horizontal most right
+//		Window window = settingsDialog.getWindow();
+//		WindowManager.LayoutParams wlp = window.getAttributes();
+//		wlp.gravity = Gravity.RIGHT;
+//		wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+//		window.setAttributes(wlp);
+		
 		
 		seekBar_lower_h = (SeekBar)layout.findViewById(R.id.seekBar_lower_h);
 		seekBar_lower_s = (SeekBar)layout.findViewById(R.id.seekBar_lower_s);
@@ -99,6 +110,7 @@ public class MainActivity extends Activity {
 
 		public void onStopTrackingTouch(SeekBar seekBar) {
 			changeHSVbound(1,1,progress_lower_h);	//lower,H,progress
+			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_h_value)).setText(progress_lower_h+"");
 		}
 	};
 
@@ -112,9 +124,9 @@ public class MainActivity extends Activity {
 
 		public void onStopTrackingTouch(SeekBar seekBar) {
 			changeHSVbound(1,2,progress_lower_s);	//lower,S,progress
+			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_s_value)).setText(progress_lower_s+"");
 		}
 	};
-
 
 	OnSeekBarChangeListener seekBar_lower_v_listener = new OnSeekBarChangeListener() {
 		public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
@@ -126,6 +138,7 @@ public class MainActivity extends Activity {
 
 		public void onStopTrackingTouch(SeekBar seekBar) {
 			changeHSVbound(1,3,progress_lower_v);	//lower,V,progress
+			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_v_value)).setText(progress_lower_v+"");
 		}
 	};
 	
@@ -138,6 +151,7 @@ public class MainActivity extends Activity {
 
 		public void onStopTrackingTouch(SeekBar seekBar) {
 			changeHSVbound(2,1,progress_higher_h);	//higher,H,progress
+			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.higher_h_value)).setText(progress_higher_h+"");
 		}
 	};
 	
@@ -150,6 +164,7 @@ public class MainActivity extends Activity {
 
 		public void onStopTrackingTouch(SeekBar seekBar) {
 			changeHSVbound(2,2,progress_higher_s);	//higher,S,progress
+			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.higher_s_value)).setText(progress_higher_s+"");
 		}
 	};
 	
@@ -163,6 +178,7 @@ public class MainActivity extends Activity {
 
 		public void onStopTrackingTouch(SeekBar seekBar) {
 			changeHSVbound(2,3,progress_higher_v);	//higher,V,progress
+			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.higher_v_value)).setText(progress_higher_v+"");
 		}
 	};
 
@@ -208,13 +224,35 @@ public class MainActivity extends Activity {
 			bShowTresholded = false;
 		else if (item == mItemPreviewTresholded)
 			bShowTresholded = true;
-		else if(item == mItemClearScribble)
+		else if(item == mItemClearScribble) {
 			clearScribble();
+			if(bShowTresholded) {		//only clear the hsv settings if in threshold view
+				resetHSVSettings();
+				resetDialogSeekbar();
+			}
+		}
 		else if(item == mItemSettings)
 			settingsDialog.show();
 		return true;
 	}
+	
+	public void resetDialogSeekbar() {
+		seekBar_lower_h.setProgress(170);
+		seekBar_lower_s.setProgress(160);
+		seekBar_lower_v.setProgress(60);
+		seekBar_higher_h.setProgress(180);
+		seekBar_higher_s.setProgress(255);
+		seekBar_higher_v.setProgress(255);
+		View dialogContent = settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content);
+		((TextView)dialogContent.findViewById(R.id.lower_h_value)).setText(170+"");
+		((TextView)dialogContent.findViewById(R.id.lower_s_value)).setText(160+"");
+		((TextView)dialogContent.findViewById(R.id.lower_v_value)).setText(60+"");
+		((TextView)dialogContent.findViewById(R.id.higher_h_value)).setText(180+"");
+		((TextView)dialogContent.findViewById(R.id.higher_s_value)).setText(255+"");
+		((TextView)dialogContent.findViewById(R.id.higher_v_value)).setText(255+"");
+	}
 
 	public native boolean clearScribble();
+	public native boolean resetHSVSettings();
 	public native int changeHSVbound(int lu, int id, int val);
 }
