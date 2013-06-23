@@ -17,22 +17,14 @@ public class ObjTrackView extends SampleViewBase {
         super(context);
     }
     
-//    static {
-//    	if (!OpenCVLoader.initDebug()) {
-//            // Handle initialization error
-//        } else {
-//        	System.loadLibrary("objtrack");
-//        }
-//    }
-    
-	public native void findFeatures(int width, int height, byte yuv[], int[] rgba, boolean debug);
+	public native int findFeatures(int width, int height, byte yuv[], int[] rgba, boolean debug);
 
 	@Override
-	protected void onPreviewStared(int previewWidtd, int previewHeight) {
+	protected void onPreviewStared(int previewWidth, int previewHeight) {
 		Log.i(TAG, "onPreviewStarted");
-		mFrameSize = previewWidtd * previewHeight;
+		mFrameSize = previewWidth * previewHeight;
 		mRGBA = new int[mFrameSize];
-		mBitmap = Bitmap.createBitmap(previewWidtd, previewHeight, Bitmap.Config.ARGB_8888);
+		mBitmap = Bitmap.createBitmap(previewWidth, previewHeight, Bitmap.Config.ARGB_8888);
 	}
 
 	@Override
@@ -47,7 +39,7 @@ public class ObjTrackView extends SampleViewBase {
 
     @Override
     protected Bitmap processFrame(byte[] data) {
-    	Log.i(TAG, "processFrame");
+    	//Log.i(TAG, "processFrame");
         int[] rgba = mRGBA;
 
         findFeatures(getFrameWidth(),getFrameHeight(), data, rgba, MainActivity.bShowTresholded);

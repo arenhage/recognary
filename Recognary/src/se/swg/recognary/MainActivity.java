@@ -19,7 +19,10 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -27,6 +30,7 @@ public class MainActivity extends Activity {
 	private CameraBridgeViewBase mOpenCvCameraView;
 	private MenuItem mItemPreviewRGBA;
 	private MenuItem mItemPreviewTresholded;
+	private MenuItem mItemClearScribble;
 	public static boolean bShowTresholded = false;
 	
 	private String TAG = "RECOGNARY";
@@ -70,6 +74,7 @@ public class MainActivity extends Activity {
     	Log.i(TAG, "onCreateOptionsMenu");
     	mItemPreviewRGBA = menu.add("Preview RGBA");
     	mItemPreviewTresholded = menu.add("Preview Thresholded");
+    	mItemClearScribble = menu.add("Clear scribble");
     	return true;
     }
     
@@ -80,6 +85,10 @@ public class MainActivity extends Activity {
     		bShowTresholded = false;
         else if (item == mItemPreviewTresholded)
         	bShowTresholded = true;
+        else if(item == mItemClearScribble)
+        	clearScribble();
     	return true;
     }
+    
+	public native boolean clearScribble();
 }
