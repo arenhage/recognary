@@ -11,6 +11,13 @@
 using namespace std;
 using namespace cv;
 
+int lowerH=170;
+int lowerS=160;
+int lowerV=60;
+
+int upperH=180;
+int upperS=256;
+int upperV=256;
 
 int lastX = -1;
 int lastY = -1;
@@ -45,12 +52,13 @@ void DrawTrack(IplImage* imgThreshed) {
 IplImage* GetThresholdedImage(IplImage* imgHSV) {
 	IplImage* imgThreshed = cvCreateImage(cvGetSize(imgHSV), IPL_DEPTH_8U, 1);
 	//Now we do the actual thresholding
-	cvInRangeS(imgHSV, cvScalar(170,160,60), cvScalar(180,256,256), imgThreshed);
+	//cvInRangeS(imgHSV, cvScalar(170,160,60), cvScalar(180,256,256), imgThreshed);
+	cvInRangeS(imgHSV, cvScalar(lowerH,lowerS,lowerV), cvScalar(upperH,upperS,upperV), imgThreshed);
 	return imgThreshed;
 }
 
 extern "C" {
-JNIEXPORT jint JNICALL Java_se_swg_recognary_ObjTrackView_findFeatures(JNIEnv* env, jobject thiz, jint width,
+JNIEXPORT void JNICALL Java_se_swg_recognary_ObjTrackView_findFeatures(JNIEnv* env, jobject thiz, jint width,
 		jint height, jbyteArray yuv, jintArray bgra, jboolean debug)
 	{
 		jbyte* _yuv  = env->GetByteArrayElements(yuv, 0);
@@ -58,9 +66,10 @@ JNIEXPORT jint JNICALL Java_se_swg_recognary_ObjTrackView_findFeatures(JNIEnv* e
 
 		Mat myuv(height + height/2, width, CV_8UC1, (unsigned char *)_yuv);
 		Mat mbgra(height, width, CV_8UC4, (unsigned char *)_bgra);
-		Mat mgray(height, width, CV_8UC1, (unsigned char *)_yuv);
+		//Mat mgray(height, width, CV_8UC1, (unsigned char *)_yuv);
 
 		IplImage img_color = mbgra;
+		//IplImage img_gray = mgray;
 
 		if(imgScribble == NULL) {
 			imgScribble=cvCreateImage(cvGetSize(&img_color),IPL_DEPTH_8U, 4);
@@ -112,5 +121,26 @@ JNIEXPORT jint JNICALL Java_se_swg_recognary_ObjTrackView_findFeatures(JNIEnv* e
 		imgScribble = NULL;
 		return imgScribble == NULL;
 	}
-}
 
+	//H=1, S=2, V=3
+	//lower=1, upper=2
+	JNIEXPORT jint JNICALL Java_se_swg_recognary_MainActivity_changeHSVbound(JNIEnv* env, jobject thiz, jint lu, jint id, jint val) {
+		if(lu == 1) {
+			if(id == 1)
+				lowerH = val;
+			else if (id == 2)
+				lowerS = val;
+			else if(id == 3)
+				lowerV = val;
+		}
+		else if(lu == 2) {
+			if(id == 1)
+				upperH = val;
+			else if (id == 2)
+				upperS = val;
+			else if(id == 3)
+				upperV = val;
+		}
+		return lu;
+	}
+}
