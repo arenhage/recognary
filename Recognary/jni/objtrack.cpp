@@ -16,8 +16,8 @@ int lowerS=160;
 int lowerV=60;
 
 int upperH=180;
-int upperS=256;
-int upperV=256;
+int upperS=255;
+int upperV=255;
 
 int lastX = -1;
 int lastY = -1;

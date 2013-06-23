@@ -18,7 +18,8 @@
 	            android:id="@+id/seekBar_lower_h"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:max ="179"/>
+	            android:max ="179"
+	            android:progress="170"/>
 	        
 	        <TextView
 	            android:id="@+id/lower_h_value"
@@ -36,7 +37,8 @@
 	            android:id="@+id/seekBar_lower_s"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:max ="255"/>
+	            android:max ="255"
+	            android:progress="160"/>
 	        
 	        <TextView
 	            android:id="@+id/lower_s_value"
@@ -54,7 +56,8 @@
 	            android:id="@+id/seekBar_lower_v"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:max ="255"/>
+	            android:max ="255"
+	            android:progress="60"/>
 	        
 	        <TextView
 	            android:id="@+id/lower_v_value"
@@ -72,7 +75,8 @@
 	            android:id="@+id/seekBar_higher_h"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:max ="179"/>
+	            android:max ="179"
+	            android:progress="180"/>
 	        
 	        <TextView
 	            android:id="@+id/higher_h_value"
@@ -90,7 +94,8 @@
 	            android:id="@+id/seekBar_higher_s"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:max ="255"/>
+	            android:max ="255"
+	            android:progress="255"/>
 	        
 	        <TextView
 	            android:id="@+id/higher_s_value"
@@ -108,7 +113,8 @@
 	            android:id="@+id/seekBar_higher_v"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:max ="255"/>
+	            android:max ="255"
+	            android:progress="255"/>
 	        
 	        <TextView
 	            android:id="@+id/higher_v_value"
