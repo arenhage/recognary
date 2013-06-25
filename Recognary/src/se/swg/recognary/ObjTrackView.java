@@ -17,7 +17,7 @@ public class ObjTrackView extends SampleViewBase {
         super(context);
     }
     
-	public native int findFeatures(int width, int height, byte yuv[], int[] rgba, boolean debug);
+	public native int findFeatures(int width, int height, byte yuv[], int[] rgba, boolean debug, boolean circleTrack);
 
 	@Override
 	protected void onPreviewStared(int previewWidth, int previewHeight) {
@@ -42,7 +42,7 @@ public class ObjTrackView extends SampleViewBase {
     	//Log.i(TAG, "processFrame");
         int[] rgba = mRGBA;
 
-        findFeatures(getFrameWidth(),getFrameHeight(), data, rgba, MainActivity.bShowTresholded);
+        findFeatures(getFrameWidth(),getFrameHeight(), data, rgba, MainActivity.bShowTresholded, MainActivity.bCircleTrack);
 
         Bitmap bmp = mBitmap; 
         bmp.setPixels(rgba, 0/* offset */, getFrameWidth() /* stride */, 0, 0, getFrameWidth(), getFrameHeight());

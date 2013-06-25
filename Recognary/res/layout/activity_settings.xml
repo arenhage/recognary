@@ -14,32 +14,38 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="lower H" />
-	
-	        <SeekBar
-	            android:id="@+id/seekBar_lower_h"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:max ="179"
-	            android:progress="170"/>
 	        
 	        <TextView
 	            android:id="@+id/lower_h_value"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="170" />
+
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content" >
+
+	            <Button
+	                android:id="@+id/btn_minus_lower_h"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="-" />
+
+	            <Button
+	                android:id="@+id/btn_plus_lower_h"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="+" />
+
+	        </LinearLayout>
 	        
 	        <TextView
 	            android:id="@+id/textView1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="lower S" />
-	
-	        <SeekBar
-	            android:id="@+id/seekBar_lower_s"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:max ="255"
-	            android:progress="160"/>
 	        
 	        <TextView
 	            android:id="@+id/lower_s_value"
@@ -47,18 +53,31 @@
 	            android:layout_height="wrap_content"
 	            android:text="160" />
 	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content" >
+
+	            <Button
+	                android:id="@+id/btn_minus_lower_s"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="-" />
+
+	            <Button
+	                android:id="@+id/btn_plus_lower_s"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="+" />
+
+	        </LinearLayout>
+	        
 	        <TextView
 	            android:id="@+id/textView1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="lower V" />
-	
-	        <SeekBar
-	            android:id="@+id/seekBar_lower_v"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:max ="255"
-	            android:progress="60"/>
 	        
 	        <TextView
 	            android:id="@+id/lower_v_value"
@@ -66,62 +85,118 @@
 	            android:layout_height="wrap_content"
 	            android:text="60" />
 	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content" >
+
+	            <Button
+	                android:id="@+id/btn_minus_lower_v"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="-" />
+
+	            <Button
+	                android:id="@+id/btn_plus_lower_v"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="+" />
+
+	        </LinearLayout>
+	        
 	        <TextView
 	            android:id="@+id/textView1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="higher H"/>
+	            android:text="upper H"/>
 	
-	        <SeekBar
-	            android:id="@+id/seekBar_higher_h"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:max ="179"
-	            android:progress="180"/>
-	        
 	        <TextView
-	            android:id="@+id/higher_h_value"
+	            android:id="@+id/upper_h_value"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="180" />
 	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content" >
+
+	            <Button
+	                android:id="@+id/btn_minus_upper_h"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="-" />
+
+	            <Button
+	                android:id="@+id/btn_plus_upper_h"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="+" />
+
+	        </LinearLayout>
+	        
 	        <TextView
 	            android:id="@+id/textView1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="higher S" />
-	
-	        <SeekBar
-	            android:id="@+id/seekBar_higher_s"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:max ="255"
-	            android:progress="255"/>
-	        
+	            android:text="upper S" />
+		        
 	        <TextView
-	            android:id="@+id/higher_s_value"
+	            android:id="@+id/upper_s_value"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="255" />
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content" >
+	        	<Button
+	                android:id="@+id/btn_minus_upper_s"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="-" />
+	
+	            <Button
+	                android:id="@+id/btn_plus_upper_s"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="+" />
+			</LinearLayout>
 	        
 	        <TextView
 	            android:id="@+id/textView1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="higher V" />
-	
-	        <SeekBar
-	            android:id="@+id/seekBar_higher_v"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:max ="255"
-	            android:progress="255"/>
+	            android:text="upper V" />
 	        
 	        <TextView
-	            android:id="@+id/higher_v_value"
+	            android:id="@+id/upper_v_value"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="255" />
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content" >
+	            
+				<Button
+	                android:id="@+id/btn_minus_upper_v"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="-" />
+	
+	            <Button
+	                android:id="@+id/btn_plus_upper_v"
+	                style="?android:attr/buttonStyleSmall"
+	                android:layout_width="50dp"
+	                android:layout_height="wrap_content"
+	                android:text="+" />
+			</LinearLayout>
 	
 	    </LinearLayout>
 </ScrollView>

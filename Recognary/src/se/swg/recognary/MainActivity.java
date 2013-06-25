@@ -26,10 +26,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -38,26 +40,34 @@ public class MainActivity extends Activity {
 	private CameraBridgeViewBase mOpenCvCameraView;
 	private MenuItem mItemPreviewRGBA;
 	private MenuItem mItemPreviewTresholded;
+	private MenuItem mItemCircleTrack;
 	private MenuItem mItemClearScribble;
 	private MenuItem mItemSettings;
 	public static boolean bShowTresholded = false;
+	public static boolean bCircleTrack = false;
 	private String TAG = "RECOGNARY";
 
 	Dialog settingsDialog;
-	SeekBar seekBar_lower_h;
-	SeekBar seekBar_lower_s;
-	SeekBar seekBar_lower_v;
+	Button btn_minus_lower_h;
+	Button btn_minus_lower_s;
+	Button btn_minus_lower_v;
+	Button btn_plus_lower_h;
+	Button btn_plus_lower_s;
+	Button btn_plus_lower_v;
 
-	SeekBar seekBar_higher_h;
-	SeekBar seekBar_higher_s;
-	SeekBar seekBar_higher_v;
+	Button btn_minus_upper_h;
+	Button btn_minus_upper_s;
+	Button btn_minus_upper_v;
+	Button btn_plus_upper_h;
+	Button btn_plus_upper_s;
+	Button btn_plus_upper_v;
 	
 	int progress_lower_h;
 	int progress_lower_s;
 	int progress_lower_v;
-	int progress_higher_h;
-	int progress_higher_s;
-	int progress_higher_v;
+	int progress_upper_h;
+	int progress_upper_s;
+	int progress_upper_v;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,106 +92,170 @@ public class MainActivity extends Activity {
 //		window.setAttributes(wlp);
 		
 		
-		seekBar_lower_h = (SeekBar)layout.findViewById(R.id.seekBar_lower_h);
-		seekBar_lower_s = (SeekBar)layout.findViewById(R.id.seekBar_lower_s);
-		seekBar_lower_v = (SeekBar)layout.findViewById(R.id.seekBar_lower_v);
-		seekBar_higher_h = (SeekBar)layout.findViewById(R.id.seekBar_higher_h);
-		seekBar_higher_s = (SeekBar)layout.findViewById(R.id.seekBar_higher_s);
-		seekBar_higher_v = (SeekBar)layout.findViewById(R.id.seekBar_higher_v);
-		seekBar_lower_h.setOnSeekBarChangeListener(seekBar_lower_h_listener);
-		seekBar_lower_s.setOnSeekBarChangeListener(seekBar_lower_s_listener);
-		seekBar_lower_v.setOnSeekBarChangeListener(seekBar_lower_v_listener);
-		seekBar_higher_h.setOnSeekBarChangeListener(seekBar_higher_h_listener);
-		seekBar_higher_s.setOnSeekBarChangeListener(seekBar_higher_s_listener);
-		seekBar_higher_v.setOnSeekBarChangeListener(seekBar_higher_v_listener);
+		btn_minus_lower_h = (Button)layout.findViewById(R.id.btn_minus_lower_h);
+		btn_minus_lower_s = (Button)layout.findViewById(R.id.btn_minus_lower_s);
+		btn_minus_lower_v = (Button)layout.findViewById(R.id.btn_minus_lower_v);
+		btn_plus_lower_h = (Button)layout.findViewById(R.id.btn_plus_lower_h);
+		btn_plus_lower_s = (Button)layout.findViewById(R.id.btn_plus_lower_s);
+		btn_plus_lower_v = (Button)layout.findViewById(R.id.btn_plus_lower_v);
+		
+		btn_minus_upper_h = (Button)layout.findViewById(R.id.btn_minus_upper_h);
+		btn_minus_upper_s = (Button)layout.findViewById(R.id.btn_minus_upper_s);
+		btn_minus_upper_v = (Button)layout.findViewById(R.id.btn_minus_upper_v);
+		btn_plus_upper_h = (Button)layout.findViewById(R.id.btn_plus_upper_h);
+		btn_plus_upper_s = (Button)layout.findViewById(R.id.btn_plus_upper_s);
+		btn_plus_upper_v = (Button)layout.findViewById(R.id.btn_plus_upper_v);
+		
+		btn_minus_lower_h.setOnClickListener(btn_minus_lower_h_listener);
+		btn_minus_lower_s.setOnClickListener(btn_minus_lower_s_listener);
+		btn_minus_lower_v.setOnClickListener(btn_minus_lower_v_listener);
+		btn_plus_lower_h.setOnClickListener(btn_plus_lower_h_listener);
+		btn_plus_lower_s.setOnClickListener(btn_plus_lower_s_listener);
+		btn_plus_lower_v.setOnClickListener(btn_plus_lower_v_listener);
+		
+		btn_minus_upper_h.setOnClickListener(btn_minus_upper_h_listener);
+		btn_minus_upper_s.setOnClickListener(btn_minus_upper_s_listener);
+		btn_minus_upper_v.setOnClickListener(btn_minus_upper_v_listener);
+		btn_plus_upper_h.setOnClickListener(btn_plus_upper_h_listener);
+		btn_plus_upper_s.setOnClickListener(btn_plus_upper_s_listener);
+		btn_plus_upper_v.setOnClickListener(btn_plus_upper_v_listener);
+		
+		btn_minus_lower_h.setOnClickListener(btn_minus_lower_h_listener);
 
 	}
 	
 	//H=1, S=2, V=3
 	//lower=1, upper=2
-
-	OnSeekBarChangeListener seekBar_lower_h_listener = new OnSeekBarChangeListener() {
-		public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-			Log.i(TAG, "VALUE LOWER H:" + progress);
-			progress_lower_h = progress;
+	
+	OnClickListener btn_minus_lower_h_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_h_value)).getText().toString());
+			if(number-1 >= 0) {
+				changeHSVbound(1,1,number-1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_h_value)).setText((number-1)+"");
+			}
+			
 		}
-
-		public void onStartTrackingTouch(SeekBar seekBar) {}
-
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			changeHSVbound(1,1,progress_lower_h);	//lower,H,progress
-			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_h_value)).setText(progress_lower_h+"");
+	};
+	OnClickListener btn_minus_lower_s_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_s_value)).getText().toString());
+			if(number-1 >= 0) {
+				changeHSVbound(1,2,number-1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_s_value)).setText((number-1)+"");
+			}
+			
+		}
+	};	
+	OnClickListener btn_minus_lower_v_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_v_value)).getText().toString());
+			if(number-1 >= 0) {
+				changeHSVbound(1,3,number-1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_v_value)).setText((number-1)+"");
+			}
+			
 		}
 	};
 
-	OnSeekBarChangeListener seekBar_lower_s_listener = new OnSeekBarChangeListener() {
-		public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-			Log.i(TAG, "VALUE LOWER S:" + progress);
-			progress_lower_s = progress;
-		}
-
-		public void onStartTrackingTouch(SeekBar seekBar) {}
-
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			changeHSVbound(1,2,progress_lower_s);	//lower,S,progress
-			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_s_value)).setText(progress_lower_s+"");
+	OnClickListener btn_plus_lower_h_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_h_value)).getText().toString());
+			if(number+1 <= 180) {
+				changeHSVbound(1,1,number+1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_h_value)).setText((number+1)+"");
+			}
+			
 		}
 	};
-
-	OnSeekBarChangeListener seekBar_lower_v_listener = new OnSeekBarChangeListener() {
-		public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-			Log.i(TAG, "VALUE LOWER V:" + progress);
-			progress_lower_v = progress;
-		}
-
-		public void onStartTrackingTouch(SeekBar seekBar) {}
-
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			changeHSVbound(1,3,progress_lower_v);	//lower,V,progress
-			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_v_value)).setText(progress_lower_v+"");
+	OnClickListener btn_plus_lower_s_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_s_value)).getText().toString());
+			if(number+1 <= 255) {
+				changeHSVbound(1,2,number+1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_s_value)).setText((number+1)+"");
+			}
+			
 		}
 	};
 	
-	OnSeekBarChangeListener seekBar_higher_h_listener = new OnSeekBarChangeListener() {
-		public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-			Log.i(TAG, "VALUE HIGHER H:" + progress);
-			progress_higher_h = progress;
-		}
-		public void onStartTrackingTouch(SeekBar seekBar) {}
-
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			changeHSVbound(2,1,progress_higher_h);	//higher,H,progress
-			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.higher_h_value)).setText(progress_higher_h+"");
+	OnClickListener btn_plus_lower_v_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_v_value)).getText().toString());
+			if(number+1 <= 255) {
+				changeHSVbound(1,2,number+1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.lower_v_value)).setText((number+1)+"");
+			}
+			
 		}
 	};
 	
-	OnSeekBarChangeListener seekBar_higher_s_listener = new OnSeekBarChangeListener() {
-		public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-			Log.i(TAG, "VALUE HIGHER S:" + progress);
-			progress_higher_s = progress;
-		}
-		public void onStartTrackingTouch(SeekBar seekBar) {}
-
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			changeHSVbound(2,2,progress_higher_s);	//higher,S,progress
-			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.higher_s_value)).setText(progress_higher_s+"");
+	OnClickListener btn_minus_upper_h_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_h_value)).getText().toString());
+			if(number-1 >= 0) {
+				changeHSVbound(1,1,number-1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_h_value)).setText((number-1)+"");
+			}
+			
 		}
 	};
 	
-	OnSeekBarChangeListener seekBar_higher_v_listener = new OnSeekBarChangeListener() {
-		public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-			Log.i(TAG, "VALUE HIGHER V:" + progress);
-			progress_higher_v = progress;
+	OnClickListener btn_minus_upper_s_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_s_value)).getText().toString());
+			if(number-1 >= 0) {
+				changeHSVbound(1,2,number-1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_s_value)).setText((number-1)+"");
+			}
+			
 		}
-
-		public void onStartTrackingTouch(SeekBar seekBar) {}
-
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			changeHSVbound(2,3,progress_higher_v);	//higher,V,progress
-			((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.higher_v_value)).setText(progress_higher_v+"");
+	};
+	
+	OnClickListener btn_minus_upper_v_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_v_value)).getText().toString());
+			if(number-1 >= 0) {
+				changeHSVbound(1,3,number-1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_v_value)).setText((number-1)+"");
+			}
+			
 		}
 	};
 
+	OnClickListener btn_plus_upper_h_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_h_value)).getText().toString());
+			if(number+1 <= 180) {
+				changeHSVbound(1,1,number+1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_h_value)).setText((number+1)+"");
+			}
+			
+		}
+	};
+	
+	OnClickListener btn_plus_upper_s_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_s_value)).getText().toString());
+			if(number+1 <= 255) {
+				changeHSVbound(1,2,number+1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_s_value)).setText((number+1)+"");
+			}
+			
+		}
+	};
+	
+	OnClickListener btn_plus_upper_v_listener = new OnClickListener() {
+		public void onClick(View v) {
+			int number = Integer.parseInt(((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_v_value)).getText().toString());
+			if(number+1 <= 255) {
+				changeHSVbound(1,2,number+1);
+				((TextView)settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.upper_v_value)).setText((number+1)+"");
+			}
+			
+		}
+	};
+	
 	private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
 		@Override
 		public void onManagerConnected(int status) {
@@ -212,6 +286,7 @@ public class MainActivity extends Activity {
 		Log.i(TAG, "onCreateOptionsMenu");
 		mItemPreviewRGBA = menu.add("Preview RGBA");
 		mItemPreviewTresholded = menu.add("Preview Thresholded");
+		mItemCircleTrack = menu.add("Circle Track");
 		mItemClearScribble = menu.add("Clear scribble");
 		mItemSettings = menu.add("Settings");
 		return true;
@@ -224,6 +299,8 @@ public class MainActivity extends Activity {
 			bShowTresholded = false;
 		else if (item == mItemPreviewTresholded)
 			bShowTresholded = true;
+		else if (item == mItemCircleTrack)
+			if(bCircleTrack) bCircleTrack = false; else bCircleTrack = true;
 		else if(item == mItemClearScribble) {
 			clearScribble();
 			if(bShowTresholded) {		//only clear the hsv settings if in threshold view
@@ -237,19 +314,13 @@ public class MainActivity extends Activity {
 	}
 	
 	public void resetDialogSeekbar() {
-		seekBar_lower_h.setProgress(170);
-		seekBar_lower_s.setProgress(160);
-		seekBar_lower_v.setProgress(60);
-		seekBar_higher_h.setProgress(180);
-		seekBar_higher_s.setProgress(255);
-		seekBar_higher_v.setProgress(255);
 		View dialogContent = settingsDialog.getWindow().getDecorView().findViewById(android.R.id.content);
 		((TextView)dialogContent.findViewById(R.id.lower_h_value)).setText(170+"");
 		((TextView)dialogContent.findViewById(R.id.lower_s_value)).setText(160+"");
 		((TextView)dialogContent.findViewById(R.id.lower_v_value)).setText(60+"");
-		((TextView)dialogContent.findViewById(R.id.higher_h_value)).setText(180+"");
-		((TextView)dialogContent.findViewById(R.id.higher_s_value)).setText(255+"");
-		((TextView)dialogContent.findViewById(R.id.higher_v_value)).setText(255+"");
+		((TextView)dialogContent.findViewById(R.id.upper_h_value)).setText(180+"");
+		((TextView)dialogContent.findViewById(R.id.upper_s_value)).setText(255+"");
+		((TextView)dialogContent.findViewById(R.id.upper_v_value)).setText(255+"");
 	}
 
 	public native boolean clearScribble();
