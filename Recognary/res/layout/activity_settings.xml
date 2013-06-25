@@ -20,6 +20,13 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="170" />
+	        
+	        <SeekBar
+	            android:id="@+id/seekBar_lower_h"
+	            android:layout_width="170dp"
+	            android:layout_height="wrap_content"
+	            android:max ="180"
+	            android:progress="170"/>
 
 	        <LinearLayout
 	            android:layout_width="match_parent"
@@ -53,6 +60,13 @@
 	            android:layout_height="wrap_content"
 	            android:text="160" />
 	        
+	        <SeekBar
+	            android:id="@+id/seekBar_lower_s"
+	            android:layout_width="170dp"
+	            android:layout_height="wrap_content"
+	            android:max ="255"
+	            android:progress="160"/>
+	        
 	        <LinearLayout
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content" >
@@ -84,6 +98,13 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="60" />
+	        
+	        <SeekBar
+	            android:id="@+id/seekBar_lower_v"
+	            android:layout_width="170dp"
+	            android:layout_height="wrap_content"
+	            android:max ="255"
+	            android:progress="60"/>
 	        
 	        <LinearLayout
 	            android:layout_width="match_parent"
@@ -117,6 +138,13 @@
 	            android:layout_height="wrap_content"
 	            android:text="180" />
 	        
+	        <SeekBar
+	            android:id="@+id/seekBar_upper_h"
+	            android:layout_width="170dp"
+	            android:layout_height="wrap_content"
+	            android:max ="180"
+	            android:progress="180"/>
+	        
 	        <LinearLayout
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content" >
@@ -149,6 +177,13 @@
 	            android:layout_height="wrap_content"
 	            android:text="255" />
 	        
+	        <SeekBar
+	            android:id="@+id/seekBar_upper_s"
+	            android:layout_width="170dp"
+	            android:layout_height="wrap_content"
+	            android:max ="255"
+	            android:progress="255"/>
+	        
 	        <LinearLayout
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content" >
@@ -178,6 +213,13 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="255" />
+	        
+	        <SeekBar
+	            android:id="@+id/seekBar_upper_v"
+	            android:layout_width="170dp"
+	            android:layout_height="wrap_content"
+	            android:max ="255"
+	            android:progress="255"/>
 	        
 	        <LinearLayout
 	            android:layout_width="match_parent"
